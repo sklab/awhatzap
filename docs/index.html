@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A What Zap</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+    <!-- Favicon setting -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    
+    
+    
+    
+    
+    <style>
+        .title-bar {
+            background-color: #333333;
+            color: white;
+            text-align: center;
+        }
+        .footer {
+            background-color: #333333;
+            color: #AAA;
+            text-align: center;
+            font-size: 14px;
+        }
+        a {
+            color: white;
+        }
+        #tableArea {
+            margin: 10px 0px; 
+            min-height: 400px;
+            text-align: center;
+        }
+        table, td, th {
+            border: 1px #dddddd solid;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        td {
+            padding: 4px;
+        }
+        tr th {
+            padding: 4px;
+            background-color: #EAEAEA;
+            font-weight: 400;
+        }
+        table {
+            margin-bottom: 60px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col py-3 title-bar">
+                <span id="site-name">A What Zap</span>
+            </div>
+        </div>
+        <div class="row py-3">
+            <div class="col-1"></div>
+            <div class="col-10 text-center">
+                <button id='today' class='btn btn-info'>今日</button>
+                <button id='tomorrow' class='btn btn-info'>明日</button>
+                <button id='afterTomorrow' class='btn btn-info'>明後日</button>
+            </div>
+            <div class="col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-3"></div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="targetDate" autocomplete="off" />
+            </div>
+            <div class="col-3"></div>
+        </div>
+        <div class="row justify-content-center mt-3">
+            <div id="lastUpdated"></div>
+        </div>
+        <div class="row">
+            <div id="tableArea" class="col">
+            確認したい日を選択してください。
+            </div>
+        </div>
+        <div class="row fixed-bottom">
+            <div class="col py-2 footer">
+                &copy; <span id="copyYear"></span> sklab
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bootstrap4 with jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
+    <!-- bootstrap-datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ja.min.js" integrity="sha512-zI0UB5DgB1Bvvrob7MyykjmbEI4e6Qkf5Aq+VJow4nwRZrL2hYKGqRf6zgH3oBQUpxPLcF2IH5PlKrW6O3y3Qw==" crossorigin="anonymous"></script>
+    <!-- Day.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.4/dayjs.min.js" integrity="sha512-XZSHSEFj4QeE0G4pwy4tToyAhF2VXoEcF9CP0t1PSZMP2XHhEEB9PjM9knsdzcEKbi6GRMazdt8tJadz0JTKIQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.9.4/locale/ja.min.js" integrity="sha512-SiUClNZ+4V0LNhEejAXtMc4PVMKb7HbzkNP9z2sIjJblwnojFZp1bPkhzAmu4Jbj/2Ohqxu5NhXqkNI1wMKuyw==" crossorigin="anonymous"></script>
+    <!-- CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+
+    <!-- My code -->
+    <script>
+        $(function(){
+            dayjs.locale('ja');
+            $('#copyYear').text(dayjs().format('YYYY'));
+
+            const encryptedValue = 'U2FsdGVkX1/Nk0iZ6UcTbaf+gp8wKiZxF+yI5ddjwxHp30UiMZex72u9zqhVlkHU';
+            const encryptedValue2 = 'pv6Mb+i/Zh/vZSVARy3Hey1FsdGVkX1+gaqm4opJY5/UzIZXZocC2oOQ/BrZU/np'; // Currently not used.
+            const urlParam = location.search;
+            let dirPath = CryptoJS.AES.decrypt(encryptedValue, urlParam).toString(CryptoJS.enc.Utf8);
+
+            if (dirPath === '') {
+                dirPath = CryptoJS.AES.decrypt(encryptedValue2, urlParam).toString(CryptoJS.enc.Utf8);
+            }
+
+            const datepicker = $('#targetDate').datepicker({
+                autoclose: true,
+                format: "yyyy/mm/dd",
+                language: "ja"
+            });
+
+            $('#today').on('click', function() {
+                datepicker.datepicker('setDate', dayjs().format('YYYY-MM-DD'));
+                $('targetDate').trigger('change');
+            });
+            $('#tomorrow').on('click', function() {
+                datepicker.datepicker('setDate', dayjs().add(1, 'days').format('YYYY-MM-DD'));
+                $('targetDate').trigger('change');
+            });
+            $('#afterTomorrow').on('click', function() {
+                datepicker.datepicker('setDate', dayjs().add(2, 'days').format('YYYY-MM-DD'));
+                $('targetDate').trigger('change');
+            });
+
+            $('#targetDate').on('change', function() {
+                document.querySelector('#tableArea').innerHTML = '読み込み中...'
+                    + "<br>5秒経過しても表示されない時は、<br>別の日を選択してください。";
+                const script = document.createElement("script");
+                const dt = $('#targetDate').val().replace(/\//g, '');
+                script.src = dirPath + '/contents/' + dt.substr(0, 4) + '/' + dt + '.js?' + Math.random();
+                document.body.appendChild(script);
+            });
+        });
+    </script>
+</body>
+</html>
