@@ -1,0 +1,36 @@
+.title-bar {
+    background-color: #333333;
+    color: white;
+    text-align: center;
+}
+.footer {
+    background-color: #333333;
+    color: #AAA;
+    text-align: center;
+    font-size: 14px;
+}
+a {
+    color: white;
+}
+#tableArea {
+    margin: 10px 0px; 
+    min-height: 400px;
+    text-align: center;
+}
+table, td, th {
+    border: 1px #dddddd solid;
+    text-align: center;
+    font-size: 1.2rem;
+}
+td {
+    padding: 4px;
+}
+tr th {
+    padding: 4px;
+    background-color: #EAEAEA;
+    font-weight: 400;
+}
+table {
+    margin-bottom: 60px;
+    width: 100%;
+}
