@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "AWZ",
+    "short_name": "AWZ",
+    "prefer_related_applications": true,
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
