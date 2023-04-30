@@ -12,6 +12,11 @@
 a {
     color: white;
 }
+.date-input {
+    display: inline-block;
+    width: 116px;
+}
+
 #tableArea {
     margin: 10px 0px; 
     min-height: 400px;

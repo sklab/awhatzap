@@ -45,8 +45,10 @@
         </div>
         <div class="row">
             <div class="col-3"></div>
-            <div class="col-6">
-                <input type="text" class="form-control" id="targetDate" autocomplete="off" />
+            <div class="col-6 px-0 text-center">
+                <button id='prev' class='btn btn-light'>&lt;</button>
+                <input type="text" class="form-control date-input" id="targetDate" autocomplete="off" />
+                <button id='next' class='btn btn-light'>&gt;</button>
             </div>
             <div class="col-3"></div>
         </div>
@@ -117,6 +119,17 @@
             });
             $('#afterTomorrow').on('click', function() {
                 datepicker.datepicker('setDate', dayjs().add(2, 'days').format('YYYY-MM-DD'));
+                $('targetDate').trigger('change');
+            });
+
+            $('#prev').on('click', function() {
+                const dt = $('#targetDate').val().replace(/\//g, '-');
+                datepicker.datepicker('setDate', dayjs(dt).add(-1, 'days').format('YYYY-MM-DD'));
+                $('targetDate').trigger('change');
+            });
+            $('#next').on('click', function() {
+                const dt = $('#targetDate').val().replace(/\//g, '-');
+                datepicker.datepicker('setDate', dayjs(dt).add(1, 'days').format('YYYY-MM-DD'));
                 $('targetDate').trigger('change');
             });
 
