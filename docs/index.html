@@ -143,7 +143,9 @@
                 $('#tableArea').html('読み込み中...' + '<br>5秒経過しても表示されない時は、<br>別の日を選択してください。');
                 const script = document.createElement("script");
                 const dt = $('#targetDate').val().replace(/\//g, '');
-                script.src = dirPath + '/contents/' + dt.substr(0, 4) + '/' + dt + '.js?' + Math.random();
+                // Cache busting for every 10 minutes.
+                const cacheBuster = dayjs().format('YYYYMMDDHHmm').slice(0, -1);
+                script.src = dirPath + '/contents/' + dt.substr(0, 4) + '/' + dt + '.js?' + cacheBuster;
                 document.body.appendChild(script);
             });
         });
